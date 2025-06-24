@@ -25,9 +25,9 @@
  */
 
 #include "Logger.h"
+#include "EEPROM.h"
 #include "config.h"
 #include "sys_io.h"
-#include "EEPROM.h"
 
 Logger::LogLevel Logger::logLevel = Logger::Info;
 uint32_t Logger::lastLogTime = 0;
@@ -37,8 +37,7 @@ uint32_t Logger::lastLogTime = 0;
  * printf() style, see Logger::log()
  *
  */
-void Logger::debug(const char *message, ...)
-{
+void Logger::debug(const char *message, ...) {
     if (logLevel > Debug) {
         return;
     }
@@ -53,8 +52,7 @@ void Logger::debug(const char *message, ...)
  * Output a info message with a variable amount of parameters
  * printf() style, see Logger::log()
  */
-void Logger::info(const char *message, ...)
-{
+void Logger::info(const char *message, ...) {
     if (logLevel > Info) {
         return;
     }
@@ -69,8 +67,7 @@ void Logger::info(const char *message, ...)
  * Output a warning message with a variable amount of parameters
  * printf() style, see Logger::log()
  */
-void Logger::warn(const char *message, ...)
-{
+void Logger::warn(const char *message, ...) {
     if (logLevel > Warn) {
         return;
     }
@@ -85,8 +82,7 @@ void Logger::warn(const char *message, ...)
  * Output a error message with a variable amount of parameters
  * printf() style, see Logger::log()
  */
-void Logger::error(const char *message, ...)
-{
+void Logger::error(const char *message, ...) {
     if (logLevel > Error) {
         return;
     }
@@ -101,8 +97,7 @@ void Logger::error(const char *message, ...)
  * Output a console message with a variable amount of parameters
  * printf() style, see Logger::logMessage()
  */
-void Logger::console(const char *message, ...)
-{
+void Logger::console(const char *message, ...) {
     va_list args;
     va_start(args, message);
     Logger::logMessage(message, args);
@@ -112,26 +107,17 @@ void Logger::console(const char *message, ...)
 /*
  * Set the log level. Any output below the specified log level will be omitted.
  */
-void Logger::setLoglevel(LogLevel level)
-{
-    logLevel = level;
-}
+void Logger::setLoglevel(LogLevel level) { logLevel = level; }
 
 /*
  * Retrieve the current log level.
  */
-Logger::LogLevel Logger::getLogLevel()
-{
-    return logLevel;
-}
+Logger::LogLevel Logger::getLogLevel() { return logLevel; }
 
 /*
  * Return a timestamp when the last log entry was made.
  */
-uint32_t Logger::getLastLogTime()
-{
-    return lastLogTime;
-}
+uint32_t Logger::getLastLogTime() { return lastLogTime; }
 
 /*
  * Returns if debug log level is enabled. This can be used in time critical
@@ -143,10 +129,7 @@ uint32_t Logger::getLastLogTime()
  *    Logger::debug("current time: %d", millis());
  * }
  */
-boolean Logger::isDebug()
-{
-    return logLevel == Debug;
-}
+boolean Logger::isDebug() { return logLevel == Debug; }
 
 /*
  * Output a log message (called by debug(), info(), warn(), error(), console())
@@ -166,8 +149,7 @@ boolean Logger::isDebug()
  * %t - prints the next parameter as boolean ('T' or 'F')
  * %T - prints the next parameter as boolean ('true' or 'false')
  */
-void Logger::log(LogLevel level, const char *format, va_list args)
-{
+void Logger::log(LogLevel level, const char *format, va_list args) {
     lastLogTime = millis();
     Serial.print(lastLogTime);
     Serial.print(" - ");
@@ -211,8 +193,7 @@ void Logger::log(LogLevel level, const char *format, va_list args)
  * %t - prints the next parameter as boolean ('T' or 'F')
  * %T - prints the next parameter as boolean ('true' or 'false')
  */
-void Logger::logMessage(const char *format, va_list args)
-{
+void Logger::logMessage(const char *format, va_list args) {
     uint8_t buffer[200];
     uint8_t buffLen = 0;
     uint8_t writeLen;
@@ -230,44 +211,50 @@ void Logger::logMessage(const char *format, va_list args)
             }
 
             if (*format == 's') {
-                register char *s = (char *) va_arg(args, int);
-                writeLen = sprintf((char*)&buffer[buffLen], "%s", s);
+                register char *s = (char *)va_arg(args, int);
+                writeLen = sprintf((char *)&buffer[buffLen], "%s", s);
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'd' || *format == 'i') {
-                writeLen = sprintf((char*)&buffer[buffLen], "%i", va_arg(args, int));
+                writeLen =
+                    sprintf((char *)&buffer[buffLen], "%i", va_arg(args, int));
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'f') {
-                writeLen = sprintf((char*)&buffer[buffLen], "%.2f", va_arg(args, double));
+                writeLen = sprintf((char *)&buffer[buffLen], "%.2f",
+                                   va_arg(args, double));
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'x') {
-                writeLen = sprintf((char*)&buffer[buffLen], "%X", va_arg(args, int));
+                writeLen =
+                    sprintf((char *)&buffer[buffLen], "%X", va_arg(args, int));
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'X') {
-                writeLen = sprintf((char*)&buffer[buffLen], "0x%X", va_arg(args, int));
+                writeLen = sprintf((char *)&buffer[buffLen], "0x%X",
+                                   va_arg(args, int));
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'l') {
-                writeLen = sprintf((char*)&buffer[buffLen], "%l", va_arg(args, long));
+                writeLen =
+                    sprintf((char *)&buffer[buffLen], "%l", va_arg(args, long));
                 buffLen += writeLen;
                 continue;
             }
 
             if (*format == 'c') {
-                writeLen = sprintf((char*)&buffer[buffLen], "%c", va_arg(args, int));
+                writeLen =
+                    sprintf((char *)&buffer[buffLen], "%c", va_arg(args, int));
                 buffLen += writeLen;
                 continue;
             }
@@ -283,27 +270,26 @@ void Logger::logMessage(const char *format, va_list args)
 
             if (*format == 'T') {
                 if (va_arg(args, int) == 1) {
-                    writeLen = sprintf((char*)&buffer[buffLen], "TRUE");
+                    writeLen = sprintf((char *)&buffer[buffLen], "TRUE");
                     buffLen += writeLen;
                 } else {
-                    writeLen = sprintf((char*)&buffer[buffLen], "FALSE");
+                    writeLen = sprintf((char *)&buffer[buffLen], "FALSE");
                     buffLen += writeLen;
                 }
                 continue;
             }
-        }
-        else buffer[buffLen++] = *format;
+        } else
+            buffer[buffLen++] = *format;
     }
     buffer[buffLen++] = '\r';
     buffer[buffLen++] = '\n';
     Serial.write(buffer, buffLen);
-    //printf("%s", buffer);
-    //If wifi has connected nodes then send to them too.
-    for(int i = 0; i < MAX_CLIENTS; i++){
-        if (SysSettings.clientNodes[i] && SysSettings.clientNodes[i].connected()){
+    // printf("%s", buffer);
+    // If wifi has connected nodes then send to them too.
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (SysSettings.clientNodes[i] &&
+            SysSettings.clientNodes[i].connected()) {
             SysSettings.clientNodes[i].write(buffer, buffLen);
         }
     }
 }
-
-

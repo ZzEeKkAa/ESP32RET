@@ -26,9 +26,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
 
-#include <Arduino.h>
 #include "esp32_can.h"
 #include "sys_io.h"
+#include <Arduino.h>
 
 void loadSettings();
 void processDigToggleFrame(CAN_FRAME &frame);

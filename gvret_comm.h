@@ -1,8 +1,8 @@
 #pragma once
-#include <Arduino.h>
+#include "commbuffer.h"
 #include "config.h"
 #include "esp32_can.h"
-#include "commbuffer.h"
+#include <Arduino.h>
 
 enum STATE {
     IDLE,
@@ -21,8 +21,7 @@ enum STATE {
     SETUP_EXT_BUSES
 };
 
-enum GVRET_PROTOCOL
-{
+enum GVRET_PROTOCOL {
     PROTO_BUILD_CAN_FRAME = 0,
     PROTO_TIME_SYNC = 1,
     PROTO_DIG_INPUTS = 2,
@@ -43,12 +42,11 @@ enum GVRET_PROTOCOL
     PROTO_GET_FD = 22,
 };
 
-class GVRET_Comm_Handler: public CommBuffer
-{
+class GVRET_Comm_Handler : public CommBuffer {
 public:
     GVRET_Comm_Handler();
     void processIncomingByte(uint8_t in_byte);
-    
+
 private:
     CAN_FRAME build_out_frame;
     CAN_FRAME_FD build_out_fd_frame;
