@@ -26,13 +26,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
  */
 
-
 #ifndef SYS_IO_H_
 #define SYS_IO_H_
 
-#include <Arduino.h>
-#include "config.h"
 #include "Logger.h"
+#include "config.h"
+#include <Arduino.h>
 
 typedef struct {
     uint16_t offset;
@@ -43,13 +42,15 @@ extern void ADC_Handler();
 void sys_early_setup();
 void setup_sys_io();
 void setupFastADC();
-void getADCAvg();  //CALL in loop()Take the arithmetic average of the readings in the buffer for each channel & updates adc_out_vals[x]
-uint16_t getAnalog(uint8_t which); //get value of one of the 9 analog inputs
-boolean getDigital(uint8_t which);  ////get value of one of the 6 digital/sudo(Analogue) inputs 0->(NUM_DIGITAL - 1)
-void setOutput(uint8_t which, boolean active); //set output high or not
-boolean getOutput(uint8_t which); //get current value of output state (high?)
+void getADCAvg(); // CALL in loop()Take the arithmetic average of the readings
+                  // in the buffer for each channel & updates adc_out_vals[x]
+uint16_t getAnalog(uint8_t which); // get value of one of the 9 analog inputs
+boolean
+getDigital(uint8_t which); ////get value of one of the 6 digital/sudo(Analogue)
+                           /// inputs 0->(NUM_DIGITAL - 1)
+void setOutput(uint8_t which, boolean active); // set output high or not
+boolean getOutput(uint8_t which); // get current value of output state (high?)
 void setLED(uint8_t, boolean);
 void toggleTXLED();
 void toggleRXLED();
 #endif
-
