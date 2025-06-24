@@ -1,5 +1,22 @@
 repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-ast
+  - id: check-json
+    exclude: '.vscode/extensions.json'
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: check-toml
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+  - id: mixed-line-ending
+    args: ['--fix=lf']
 - repo: https://github.com/pre-commit/mirrors-clang-format
   rev: v20.1.6
   hooks:
   - id: clang-format
+    exclude: '.vscode/extensions.json'
