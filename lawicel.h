@@ -2,8 +2,7 @@
 
 class CAN_FRAME;
 
-class LAWICELHandler
-{
+class LAWICELHandler {
 public:
     void handleLongCmd(char *buffer);
     void handleShortCmd(char cmd);

@@ -1,14 +1,13 @@
 #pragma once
-#include <Arduino.h>
 #include "config.h"
 #include "esp32_can.h"
+#include <Arduino.h>
 
-class CommBuffer
-{
+class CommBuffer {
 public:
     CommBuffer();
     size_t numAvailableBytes();
-    uint8_t* getBufferedBytes();
+    uint8_t *getBufferedBytes();
     void clearBufferedBytes();
     void sendFrameToBuffer(CAN_FRAME &frame, int whichBus);
     void sendFrameToBuffer(CAN_FRAME_FD &frame, int whichBus);
@@ -19,5 +18,6 @@ public:
 
 protected:
     byte transmitBuffer[WIFI_BUFF_SIZE];
-    int transmitBufferLength; //not creating a ring buffer. The buffer should be large enough to never overflow
+    int transmitBufferLength; // not creating a ring buffer. The buffer should
+                              // be large enough to never overflow
 };

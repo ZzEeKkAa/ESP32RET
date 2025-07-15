@@ -27,10 +27,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef SERIALCONSOLE_H_
 #define SERIALCONSOLE_H_
 
-#include "config.h"
-#include "sys_io.h"
 #include "ESP32RET.h"
+#include "config.h"
 #include "esp32_can.h"
+#include "sys_io.h"
 
 class SerialConsole {
 public:
@@ -40,12 +40,10 @@ public:
     void printBusName(int bus);
 
 protected:
-    enum CONSOLE_STATE {
-        STATE_ROOT_MENU
-    };
+    enum CONSOLE_STATE { STATE_ROOT_MENU };
 
 private:
-    char cmdBuffer[80];    
+    char cmdBuffer[80];
     int ptrBuffer;
     int state;
 

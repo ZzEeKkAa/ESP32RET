@@ -11,12 +11,11 @@ class CAN_COMMON;
 class CAN_FRAME;
 class CAN_FRAME_FD;
 
-class CANManager
-{
+class CANManager {
 public:
     CANManager();
     void addBits(int offset, CAN_FRAME &frame);
-    void addBits(int offset, CAN_FRAME_FD &frame);    
+    void addBits(int offset, CAN_FRAME_FD &frame);
     void sendFrame(CAN_COMMON *bus, CAN_FRAME &frame);
     void sendFrame(CAN_COMMON *bus, CAN_FRAME_FD &frame);
     void displayFrame(CAN_FRAME &frame, int whichBus);
